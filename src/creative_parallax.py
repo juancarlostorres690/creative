@@ -18,8 +18,8 @@ while True:
         panel.fill_rect(150, 150, 400, 400, "yellow")
         panel.fill_rect(200, 200, 300, 300, "black")
         panel.fill_rect(250, 250, 200, 200, "white")
-        panel.fill_rect(300, 300, 100, 100, "red")
-        panel.fill_rect(325 + panel.get_mouse_x() * .05, 325 + panel.get_mouse_y() * .05, 50, 50, "yellow")
+        panel.fill_rect(300 + panel.get_mouse_x() * .05, 300 + panel.get_mouse_y() * .05, 100, 100, "red")
+        panel.fill_rect(325 + panel.get_mouse_x() * .15, 325 + panel.get_mouse_y() * .15, 50, 50, "yellow")
         prev_x, prev_y = x,y
     panel.sleep(2)
 
