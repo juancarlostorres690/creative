@@ -1,12 +1,7 @@
 from DrawingPanel import *
 
-
 panel = DrawingPanel(700, 700, "lightblue")
-
 prev_x, prev_y = panel.get_mouse_x(), panel.get_mouse_y
-
-
-
 
 while True:
     x,y = panel.get_mouse_x(), panel.get_mouse_y()
