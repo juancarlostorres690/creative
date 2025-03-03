@@ -2045,7 +2045,6 @@ http://www.buildingpythonprograms.com/
                 pass
 
     def get_mouse_x(self):
-        print("hhihihihi")
         return self._mouse_x
 
     def get_mouse_y(self):
