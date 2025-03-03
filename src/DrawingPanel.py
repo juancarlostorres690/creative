@@ -84,7 +84,7 @@ if (sys.version_info >= (3, 0)):
     from tkinter import filedialog
     from tkinter import messagebox
 else:
-    from Tkinter import Tk, Canvas, Image, Menu, PhotoImage, TclError
+    from tkinter import Tk, Canvas, Image, Menu, PhotoImage, TclError
     import tkFileDialog
     import tkMessageBox
 
@@ -2045,6 +2045,7 @@ http://www.buildingpythonprograms.com/
                 pass
 
     def get_mouse_x(self):
+        print("hhihihihi")
         return self._mouse_x
 
     def get_mouse_y(self):
