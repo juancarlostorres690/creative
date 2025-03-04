@@ -1,5 +1,13 @@
 from DrawingPanel import *
 
+
+# Juan Torres, CS 115, Winter 2025
+# Creative Parallax, 03/04/25
+#
+# The Motion Parallax file builds multiple rectangles/ovals and redraws them as the mouse
+# x and y coordinates change. The Sun and Grass is static while everything else moves when the
+# mouse moves.
+
 def main():
     panel = DrawingPanel(500, 400, "lightblue")
 

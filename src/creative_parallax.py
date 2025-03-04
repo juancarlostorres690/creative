@@ -1,5 +1,11 @@
 from DrawingPanel import *
 
+# Juan Torres, CS 115, Winter 2025
+# Creative Parallax, 03/04/25
+#
+# The creative parallax creates multiple shapes and moves 2 of the shapes when the x/y
+# positions are changed.
+
 panel = DrawingPanel(700, 700, "lightblue")
 prev_x, prev_y = panel.get_mouse_x(), panel.get_mouse_y
 
