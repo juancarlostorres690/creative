@@ -16,13 +16,6 @@ for row in range(3):
         # Draw the rectangle with black borders
         panel.draw_rect(x, y, x + rect_w, y + rect_h, outline="black")
 
-# Coordinates for the top-left rectangle
-x = 0
-y = 0
-
-# Length of the lines
-line_l = 200
-
 # First horizontal line with outward arrows
 panel.draw_line(75, 100, 275, 100, fill="black")
 
@@ -54,3 +47,17 @@ panel.draw_line(550, 100, 610, 210, fill="blue", width=3)
 # Gray rectangle in the second rectangle from the left on the top row
 panel.draw_rect(525, 30, 30, 200, fill="gray", outline="gray")
 
+# Define the starting position for the grid inside the third rectangle (top row)
+start_x = (2 * rect_w) + 10  # 10px from the left edge of the third rectangle
+start_y = 10  # 10px from the top edge of the third rectangle
+
+# Define the size and spacing of the squares
+sq_W_H = 30
+spacing = 20  # Space between squares
+
+# Loop to create 6 rows and 7 columns of black squares
+for row in range(6):
+    for col in range(7):
+        x = start_x + col * (sq_W_H + spacing)
+        y = start_y + row * (sq_W_H + spacing)
+        panel.draw_rect(x, y, sq_W_H, sq_W_H, fill="black", outline="black")
