@@ -44,3 +44,13 @@ panel.draw_line(25, 225, 75, 200, fill="black")   # Lower diag
 # Right arrowhead (pointing inward, touching only the end of the line)
 panel.draw_line(325, 175, 275, 200, fill="black")  # Upper diag
 panel.draw_line(325, 225, 275, 200, fill="black")  # Lower diag
+
+## New black line in the second rectangle from the left on the top row
+panel.draw_line(500, 20, 600, 230, fill="black", width=3)
+
+# Blue line inside the second rectangle from the left on the top row
+panel.draw_line(550, 100, 610, 210, fill="blue", width=3)
+
+# Gray rectangle in the second rectangle from the left on the top row
+panel.draw_rect(525, 30, 30, 200, fill="gray", outline="gray")
+
