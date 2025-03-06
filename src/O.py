@@ -61,3 +61,45 @@ for row in range(6):
         x = start_x + col * (sq_W_H + spacing)
         y = start_y + row * (sq_W_H + spacing)
         panel.draw_rect(x, y, sq_W_H, sq_W_H, fill="black", outline="black")
+
+# Left diagonal line in the second rectangle from the left in the middle row
+panel.draw_line(350 + 50, 600, 350 + 130, 300, fill="black", width=4)
+
+# Right diagonal line in the second rectangle from the left in the middle row
+panel.draw_line(350 + 300, 600, 350 + 220, 300, fill="black", width=4)
+
+#The horiz lines inside the 2nd rect from the left in the middle row
+rect_x = 350  # Left edge of the rectangle
+rect_y = 300  # Top edge of the rectangle
+rect_center_x = 525 # Center of the rectangle
+start_y = 580  # Start 20 from the bottom
+
+# Loop to create 14 centered horizontal black lines
+line_length = 270
+for i in range(14):
+    start_x = rect_center_x - (line_length // 2)  # Center the line
+    end_x = start_x + line_length
+    panel.draw_line(start_x, start_y, end_x, start_y, fill="black", width=4)
+    start_y -= 20  # Move up by 20px for the next line
+    line_length -= 10  # Decrease the length by 10px
+
+# Draw the two centered red lines using explicit coordinates
+panel.draw_line(430, 570, 620, 570, fill="red", width=4)
+panel.draw_line(430, 370, 620, 370, fill="red", width=4)
+
+# Loop to create the second column of gray rectangles covering the blank spaces
+for i in range(6):  # Only 5 because it's in between the black rectangles
+    panel.draw_rect(
+        1300, 325 + (i * 50), 50, 25, fill="gray", outline="gray")
+
+# Loop to create 6 black rectangles inside the last rectangle from the left
+# in the second row
+for i in range(6):
+    panel.draw_rect(
+        1050, 300 + (i * 50), 350, 25, fill="black", outline="black")
+
+# Loop to create the first column of gray rectangles covering the black
+for i in range(6):
+    panel.draw_rect(
+        1150, 300 + (i * 50), 50, 25, fill="gray", outline="gray"
+    )
