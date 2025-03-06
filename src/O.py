@@ -103,3 +103,30 @@ for i in range(6):
     panel.draw_rect(
         1150, 300 + (i * 50), 50, 25, fill="gray", outline="gray"
     )
+
+# Define the position and size of the bottom-left rectangle
+bottom_left_x = 0
+bottom_left_y = 600
+bottom_left_w = rect_w
+bottom_left_h = rect_h
+
+# Draw the gradient using vertical lines
+for i in range(0, bottom_left_w, 2):
+    color_value = i // 2  # Increase each RGB component by 1 per step
+    hex_color = f"#{color_value:02x}{color_value:02x}{color_value:02x}"  # Convert to hex
+    panel.draw_line(
+        bottom_left_x + i, bottom_left_y,
+        bottom_left_x + i, bottom_left_y + bottom_left_h,
+        fill=hex_color, width=2
+    )
+
+# Draw the overlaying rectangle
+overlay_x = bottom_left_x + 50
+overlay_y = bottom_left_y + 125
+overlay_w = 250
+overlay_h = 50
+panel.draw_rect(
+    overlay_x, overlay_y, overlay_w, overlay_h,
+    fill="#7d7d7d", outline="#7d7d7d"  # 125 in hex is 7d
+)
+
