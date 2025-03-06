@@ -111,14 +111,10 @@ bottom_left_w = rect_w
 bottom_left_h = rect_h
 
 # Draw the gradient using vertical lines
-for i in range(0, bottom_left_w, 2):
+for i in range(0, 350, 2):
     color_value = i // 2  # Increase each RGB component by 1 per step
-    hex_color = f"#{color_value:02x}{color_value:02x}{color_value:02x}"  # Convert to hex
-    panel.draw_line(
-        bottom_left_x + i, bottom_left_y,
-        bottom_left_x + i, bottom_left_y + bottom_left_h,
-        fill=hex_color, width=2
-    )
+    hex_color = f"#{color_value:02x}{color_value:02x}{color_value:02x}"
+    panel.draw_line(0 + i, 600,0 + i, 600 + 300,fill=hex_color, width=2)
 
 # Draw the overlaying rectangle
 overlay_x = bottom_left_x + 50
@@ -130,3 +126,24 @@ panel.draw_rect(
     fill="#7d7d7d", outline="#7d7d7d"  # 125 in hex is 7d
 )
 
+# Define the center of the rectangle
+center_x = 700 + (350 // 2)  # 700 + 175 = 875
+center_y = 600 + (300 // 2)  # 600 + 150 = 750
+
+# Draw 16 diagonal lines from the left edge to the center
+for i in range(16):
+    start_x = 700  # Left edge of the rectangle
+    start_y = 600 + (i * 20)  # Spaced by 20px
+    panel.draw_line(start_x, start_y, 875, 750, fill="purple", width=1)
+
+# Draw 16 diagonal lines from the right edge to the center
+for i in range(16):
+    start_x = 1050  # Right edge of the rectangle (700 + 350)
+    start_y = 600 + (i * 20)  # Spaced by 20px
+    panel.draw_line(start_x, start_y, 875, 750, fill="purple", width=1)
+
+# First red vertical line, 125 pixels from the left
+panel.draw_line(700 + 125, 600, 700 + 125, 900, fill="red", width=3)
+
+# Second red vertical line, 225 pixels from the left
+panel.draw_line(700 + 225, 600, 700 + 225, 900, fill="red", width=3)
