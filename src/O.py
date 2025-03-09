@@ -1,85 +1,65 @@
 from DrawingPanel import *
 
-# Create the drawing panel
-panel = DrawingPanel(1400, 900, "#E3E3E3")
+def draw_flower(panel, x, y, leaves):
+    # """Draws a flower at (x, y) with the given number of leaves."""
+    stem_height = 80
+    panel.fill_rect(x + 10, y - stem_height, 10, stem_height, "green")  # Stem
+    panel.fill_oval(x, y - stem_height - 20, 30, 30, "orange")  # Flower head
 
-# Set up the width and height of the rectangles
-rect_w, rect_h = 350, 300
+    # Draw leaves in pairs
+    for i in range(leaves // 2):
+        offset = i * 10
+        panel.fill_oval(x - 15, y - stem_height + 20 + offset, 20, 10,
+                        "light green")  # Left leaf
+        panel.fill_oval(x + 25, y - stem_height + 20 + offset, 20, 10,
+                        "light green")  # Right leaf
 
-# Draw 12 rectangles in a 3x4 grid
-for row in range(3):
-    for col in range(4):
-        panel.draw_rect(col * rect_w, row * rect_h, col * rect_w + rect_w,
-                        row * rect_h + rect_h, outline="black")
+# User input
+print("Welcome to the step tracker!")
+steps = int(input("How many steps have you walked? "))
 
-# First horizontal line with outward arrows
-panel.draw_line(75, 100, 275, 100, fill="black")
-panel.draw_line(75, 100, 125, 75, fill="black")
-panel.draw_line(75, 100, 125, 125, fill="black")
-panel.draw_line(275, 100, 225, 75, fill="black")
-panel.draw_line(275, 100, 225, 125, fill="black")
+# Calculate the number of flowers
+full_flowers = steps // 5000
+remaining_steps = steps % 5000
+extra_leaves = (remaining_steps // 1000) * 2 if remaining_steps > 0 else 0
 
-# Second horizontal line with inward arrows
-panel.draw_line(75, 200, 275, 200, fill="black")
-panel.draw_line(25, 175, 75, 200, fill="black")
-panel.draw_line(25, 225, 75, 200, fill="black")
-panel.draw_line(325, 175, 275, 200, fill="black")
-panel.draw_line(325, 225, 275, 200, fill="black")
+# Panel setup
+pan_w, pan_h = 500, 300
+panel = DrawingPanel(pan_w, pan_h, "light blue")
 
-# Elements in the second rectangle from the left in the top row
-panel.draw_line(500, 20, 600, 230, fill="black", width=3)
-panel.draw_line(550, 100, 610, 210, fill="blue", width=3)
-panel.draw_rect(525, 30, 30, 200, fill="gray", outline="gray")
+# Ground
+panel.fill_rect(0, 200, pan_w, 100, "dark green")
 
-# Grid inside the third rectangle (top row)
-for row in range(6):
-    for col in range(7):
-        panel.draw_rect(710 + col * 50, 10 + row * 50, 30, 30,
-                        fill="black", outline="black")
+# Oval dimensions
+oval_w, oval_h = 80, 40
+spacing = 10
+y_position = 15
 
-# Elements in the second rectangle from the left in the middle row
-panel.draw_line(400, 600, 480, 300, fill="black", width=4)
-panel.draw_line(650, 600, 570, 300, fill="black", width=4)
+# Calculate the x-coordinate for centering the middle ovals
+middle_x = (pan_w - (2 * oval_w + spacing)) // 2
 
-# Horizontal lines inside the second rectangle from the left in the middle row
-start_y, line_length = 580, 270
-for i in range(14):
-    panel.draw_line(525 - line_length // 2, start_y,
-                    525 + line_length // 2, start_y, fill="black", width=4)
-    start_y -= 20
-    line_length -= 10
+# Draw 4 gray ovals
+for i in range(4):  # 4 ovals total
+    x_position = middle_x + i * (oval_w + spacing)
+    offset = 20 if i % 2 == 1 else 0  # Offset for the 2nd and 4th ovals
+    panel.fill_oval(x_position, y_position + offset, oval_w, oval_h,
+                    "light gray")
 
-# Two centered red lines
-panel.draw_line(430, 570, 620, 570, fill="red", width=4)
-panel.draw_line(430, 370, 620, 370, fill="red", width=4)
+# Draw a yellow oval in the top-left corner
+panel.fill_oval(10, 10, 70, 70, "yellow")
 
-# Gray rectangles in the second column of the last rectangle (middle row)
-for i in range(6):
-    panel.draw_rect(1300, 325 + (i * 50), 50, 25,
-                    fill="gray", outline="gray")
+# Draw flowers
+start_x = 50
+flower_y_position = 200  # Flowers start from the bottom
 
-# Black & gray rectangles in the last rectangle from the left in the second row
-for i in range(6):
-    panel.draw_rect(1050, 300 + (i * 50), 350, 25,
-                    fill="black", outline="black")
-    panel.draw_rect(1150, 300 + (i * 50), 50, 25,
-                    fill="gray", outline="gray")
+# Draw full flowers (10 leaves each)
+for i in range(full_flowers):
+    draw_flower(panel, start_x + i * 100, flower_y_position, 10)
 
-# Gradient effect in the bottom-left rectangle
-for i in range(0, 350, 2):
-    hex_color = f"#{i//2:02x}{i//2:02x}{i//2:02x}"
-    panel.draw_line(i, 600, i, 900, fill=hex_color, width=2)
+# Draw partial flower if there are remaining steps
+if remaining_steps > 0:
+    draw_flower(panel, start_x + full_flowers * 100,
+                flower_y_position, extra_leaves)
 
-# Overlaying rectangle in the gradient area
-panel.draw_rect(50, 725, 250, 50, fill="#7d7d7d", outline="#7d7d7d")
-
-# Radiating purple lines from the center of the bottom middle rectangle
-for i in range(16):
-    panel.draw_line(700, 600 + (i * 20), 875, 750,
-                    fill="purple", width=1)
-    panel.draw_line(1050, 600 + (i * 20), 875, 750,
-                    fill="purple", width=1)
-
-# Two red vertical lines inside the bottom middle rectangle
-panel.draw_line(825, 600, 825, 900, fill="red", width=3)
-panel.draw_line(925, 600, 925, 900, fill="red", width=3)
+print(f"You walked {steps} steps! You've earned {full_flowers}"
+      f" full flowers and {1 if remaining_steps > 0 else 0} partial flower(s).")
