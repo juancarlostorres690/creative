@@ -1,18 +1,33 @@
 from DrawingPanel import *
 
-def draw_flower(panel, x, y, leaves):
-    # """Draws a flower at (x, y) with the given number of leaves."""
-    stem_height = 80
-    panel.fill_rect(x + 10, y - stem_height, 10, stem_height, "green")  # Stem
-    panel.fill_oval(x, y - stem_height - 20, 30, 30, "orange")  # Flower head
 
-    # Draw leaves in pairs
-    for i in range(leaves // 2):
-        offset = i * 10
-        panel.fill_oval(x - 15, y - stem_height + 20 + offset, 20, 10,
-                        "light green")  # Left leaf
-        panel.fill_oval(x + 25, y - stem_height + 20 + offset, 20, 10,
-                        "light green")  # Right leaf
+def draw_flower(panel, x, y, leaves):
+    """Draws a flower at (x, y) with the given number of leaves."""
+
+    # Calculate stem height (base height is 20px, grows 20px per 2 leaves)
+    stem_height = 20 + (leaves // 2) * 20
+
+    # Draw stem (line with stroke width 5)
+    panel.draw_line(x, y - stem_height, x, y, color="green", width=5)
+
+    # Draw leaves (lines at intervals of 10px)
+    for i in range(leaves):
+        leaf_y = y - stem_height + 10 + (i * 10)  # Leaves positioned every 10px
+        if i % 2 == 0:
+            # Left leaf (diagonal up-left)
+            panel.draw_line(x, leaf_y, x - 10, leaf_y - 10, color="light green",
+                            width=5)
+        else:
+            # Right leaf (diagonal up-right)
+            panel.draw_line(x, leaf_y, x + 10, leaf_y - 10, color="light green",
+                            width=5)
+
+    # Draw flower petal (50x50 oval centered above the stem)
+    panel.fill_oval(x - 25, y - stem_height - 50, 50, 50, "orange")
+
+    # Draw eye of the flower (10x10 circle centered in the petal)
+    panel.fill_oval(x - 5, y - stem_height - 25, 10, 10, "black")
+
 
 # User input
 print("Welcome to the step tracker!")
@@ -58,8 +73,9 @@ for i in range(full_flowers):
 
 # Draw partial flower if there are remaining steps
 if remaining_steps > 0:
-    draw_flower(panel, start_x + full_flowers * 100,
-                flower_y_position, extra_leaves)
+    draw_flower(panel, start_x + full_flowers * 100, flower_y_position,
+                extra_leaves)
 
-print(f"You walked {steps} steps! You've earned {full_flowers}"
-      f" full flowers and {1 if remaining_steps > 0 else 0} partial flower(s).")
+print(
+    f"You walked {steps} steps! You've earned {full_flowers} full flowers and "
+    f"{1 if remaining_steps > 0 else 0} partial flower(s).")
