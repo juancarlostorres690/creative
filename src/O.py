@@ -1,81 +1,189 @@
-from DrawingPanel import *
+import java.util.Scanner;
+
+public
 
 
-def draw_flower(panel, x, y, leaves):
-    """Draws a flower at (x, y) with the given number of leaves."""
+class BirthdayCalculator import java.util.Scanner;
 
-    # Calculate stem height (base height is 20px, grows 20px per 2 leaves)
-    stem_height = 20 + (leaves // 2) * 20
+public class BirthdayCalculator {
 
-    # Draw stem (line with stroke width 5)
-    panel.draw_line(x, y - stem_height, x, y, color="green", width=5)
+    // Days in each month for 2025 (non-leap year)
+    private static final int[] MONTH_DAYS = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    # Draw leaves (lines at intervals of 10px)
-    for i in range(leaves):
-        leaf_y = y - stem_height + 10 + (i * 10)  # Leaves positioned every 10px
-        if i % 2 == 0:
-            # Left leaf (diagonal up-left)
-            panel.draw_line(x, leaf_y, x - 10, leaf_y - 10, color="light green",
-                            width=5)
-        else:
-            # Right leaf (diagonal up-right)
-            panel.draw_line(x, leaf_y, x + 10, leaf_y - 10, color="light green",
-                            width=5)
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-    # Draw flower petal (50x50 oval centered above the stem)
-    panel.fill_oval(x - 25, y - stem_height - 50, 50, 50, "orange")
+        // Get today's date
+        System.out.println("Enter today's date:");
+        int todayMonth = getValidInput(scanner, "Month", 1, 12);
+        int todayDay = getValidInput(scanner, "Day", 1, getDaysInMonth(todayMonth));
 
-    # Draw eye of the flower (10x10 circle centered in the petal)
-    panel.fill_oval(x - 5, y - stem_height - 25, 10, 10, "black")
+        // Get user's birthday
+        System.out.println("Enter your birthday:");
+        int birthMonth = getValidInput(scanner, "Month", 1, 12);
+        int birthDay = getValidInput(scanner, "Day", 1, getDaysInMonth(birthMonth));
 
+        // Compute values
+        int todayDayOfYear = getDayOfYear(todayMonth, todayDay);
+        int birthdayDayOfYear = getDayOfYear(birthMonth, birthDay);
+        int daysUntil = daysUntilBirthday(todayDayOfYear, birthdayDayOfYear);
 
-# User input
-print("Welcome to the step tracker!")
-steps = int(input("How many steps have you walked? "))
+        // Output results
+        displayResults(todayDayOfYear, birthdayDayOfYear, daysUntil);
+        scanner.close();
+    }
 
-# Calculate the number of flowers
-full_flowers = steps // 5000
-remaining_steps = steps % 5000
-extra_leaves = (remaining_steps // 1000) * 2 if remaining_steps > 0 else 0
+    /**
+     * Returns the absolute day of the year for a given date.
+     */
+    public static int getDayOfYear(int month, int day) {
+        int days = 0;
+        for (int i = 0; i < month - 1; i++) {
+            days += MONTH_DAYS[i];
+        }
+        return days + day;
+    }
 
-# Panel setup
-pan_w, pan_h = 500, 300
-panel = DrawingPanel(pan_w, pan_h, "light blue")
+    /**
+     * Calculates the number of days until the next birthday.
+     */
+    public static int daysUntilBirthday(int todayDayOfYear, int birthdayDayOfYear) {
+        if (birthdayDayOfYear < todayDayOfYear) {
+            return (365 - todayDayOfYear) + birthdayDayOfYear; // Wraps around to next year
+        }
+        return birthdayDayOfYear - todayDayOfYear;
+    }
 
-# Ground
-panel.fill_rect(0, 200, pan_w, 100, "dark green")
+    /**
+     * Ensures user input is within a valid range.
+     */
+    public static int getValidInput(Scanner scanner, String prompt, int min, int max) {
+        int value;
+        while (true) {
+            System.out.print(prompt + " (" + min + "-" + max + "): ");
+            if (scanner.hasNextInt()) {
+                value = scanner.nextInt();
+                if (value >= min && value <= max) {
+                    return value;
+                }
+            } else {
+                scanner.next(); // Clear invalid input
+            }
+            System.out.println("Invalid input. Please enter a number between " + min + " and " + max + ".");
+        }
+    }
 
-# Oval dimensions
-oval_w, oval_h = 80, 40
-spacing = 10
-y_position = 15
+    /**
+     * Returns the number of days in a given month for 2025.
+     */
+    public static int getDaysInMonth(int month) {
+        return MONTH_DAYS[month - 1];
+    }
 
-# Calculate the x-coordinate for centering the middle ovals
-middle_x = (pan_w - (2 * oval_w + spacing)) // 2
+    /**
+     * Displays results and birthday countdown message.
+     */
+    public static void displayResults(int todayDayOfYear, int birthdayDayOfYear, int daysUntil) {
+        System.out.println("Today's absolute day of the year: " + todayDayOfYear);
+        System.out.println("Your birthday's absolute day of the year: " + birthdayDayOfYear);
 
-# Draw 4 gray ovals
-for i in range(4):  # 4 ovals total
-    x_position = middle_x + i * (oval_w + spacing)
-    offset = 20 if i % 2 == 1 else 0  # Offset for the 2nd and 4th ovals
-    panel.fill_oval(x_position, y_position + offset, oval_w, oval_h,
-                    "light gray")
+        if (daysUntil == 0) {
+            System.out.println("🎉 Happy Birthday! 🎉");
+        } else if (daysUntil == 1) {
+            System.out.println("Your birthday is tomorrow!");
+        } else {
+            System.out.println("There are " + daysUntil + " days until your next birthday.");
+        }
 
-# Draw a yellow oval in the top-left corner
-panel.fill_oval(10, 10, 70, 70, "yellow")
+        System.out.println("Did you know that on September 7, 1964, American rapper Eazy-E of N.W.A was born?");
+    }
+}
+return days + day;
+}
 
-# Draw flowers
-start_x = 50
-flower_y_position = 200  # Flowers start from the bottom
+/ **
+*Calculates
+the
+number
+of
+days
+until
+the
+next
+occurrence
+of
+the
+given
+birthday.
+* /
+public
+static
+int
+daysUntilBirthday(int
+todayDayOfYear, int
+birthdayDayOfYear) {
+if (birthdayDayOfYear < todayDayOfYear) {
+return (365 - todayDayOfYear) + birthdayDayOfYear;
+}
+return birthdayDayOfYear - todayDayOfYear;
+}
 
-# Draw full flowers (10 leaves each)
-for i in range(full_flowers):
-    draw_flower(panel, start_x + i * 100, flower_y_position, 10)
+/ **
+*Prompts
+the
+user
+for input and ensures it falls within the valid range.
+* /
+public static int getValidInput(Scanner scanner, String prompt, int min, int max) {
+int
+value;
+while (true) {
+System.out.print(prompt + " (" + min + "-" + max + "): ");
+if (scanner.hasNextInt()) {
+value = scanner.nextInt();
+if (value >= min & & value <= max) {
+return value;
+}
+} else {
+    scanner.next(); // Clear
+invalid
+input
+}
+System.out.println(
+    "Invalid input. Please enter a number between " + min + " and " + max + ".");
+}
+}
 
-# Draw partial flower if there are remaining steps
-if remaining_steps > 0:
-    draw_flower(panel, start_x + full_flowers * 100, flower_y_position,
-                extra_leaves)
+/ **
+*Displays
+the
+results
+based
+on
+the
+computed
+values.
+* /
+public
+static
+void
+displayResults(int
+todayDayOfYear, int
+birthdayDayOfYear, int
+daysUntil) {
+    System.out.println("Today's absolute day of the year: " + todayDayOfYear);
+System.out.println(
+    "Your birthday's absolute day of the year: " + birthdayDayOfYear);
 
-print(
-    f"You walked {steps} steps! You've earned {full_flowers} full flowers and "
-    f"{1 if remaining_steps > 0 else 0} partial flower(s).")
+if (daysUntil == 0)
+{
+    System.out.println("Happy Birthday!");
+} else if (daysUntil == 1) {
+System.out.println("Your birthday is tomorrow!");
+} else {
+System.out.println("There are " + daysUntil + " days until your next birthday.");
+}
+
+System.out.println("Did you know that on September 7, 1964, American rapper Eazy-E of N.W.A was born?");
+}
+}
